@@ -43,18 +43,23 @@ contract('PropertyTitleERC721Token', accounts => {
             assert.equal(tokenURI,'https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1');
         })
 
-        it('should transfer token from one owner to another', async function () {
+        it('should transfer ownership from one owner to another', async function () {
             var eventEmitted = false
             await this.contract.OwnershipTransferred((err, res) => {
                 eventEmitted = true
             });
             await this.contract.transferOwnership(account_two,{from: account_one});
+
+            assert.equal(eventEmitted,true,'Event didnt emit');
+        })
+
+        it('should transfer token from one owner to another', async function () {
+
+            await this.contract.transferFrom(account_one,account_two,1,{from: account_one});
             let balanceForAccount1 = await this.contract.balanceOf(account_one,{from: account_one});
             let balanceForAccount2 = await this.contract.balanceOf(account_two,{from: account_two});
-
-            assert.equal(balanceForAccount1,1,"The balance of account_one was wrong");
+            assert.equal(balanceForAccount1,0,"The balance of account_one was wrong");
             assert.equal(balanceForAccount2,2,"The balance of account_two was wrong");
-            assert.equal(eventEmitted,true,'Event didnt emit');
         })
     });
 
