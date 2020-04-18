@@ -43,19 +43,24 @@ Bellow is the new property to the other account:
 
 ## How to deploy the smart contract:
 
-`npm install`
-`truffle compile`
-`truffle migrate --network development --reset`
-
+```
+npm install
+truffle compile
+truffle migrate --network development --reset
+```
 To mint new tokens first you have to create new proof with ZoKrates:
 
 `docker run -v /path/to/zokrates/zokrates/code:/home/zokrates/code -ti zokrates/zokrates /bin/bash`
+
 Note: for windows the project has to be under the user path "c://Users/.." because docker can't mount folders outside of this path.
 
-`cd code/square`
-`~/zokrates setup`
-`~/zokrates compute-witness -a 3 9`
+```
+cd code/square
+~/zokrates setup
+~/zokrates compute-witness -a 3 9
+```
 Note: the proof to compute witness is simpler, is the square of a number.
+
 `~/zokrates generate-proof`
 
 You cant find the new proof at zokrates/code/square/proof.json .
