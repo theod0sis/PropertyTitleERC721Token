@@ -11,43 +11,28 @@ contract('TestSolnSquareVerifier', accounts => {
         },
         "inputs": ["0x0000000000000000000000000000000000000000000000000000000000000009", "0x0000000000000000000000000000000000000000000000000000000000000001"]
     }
+    const account_one = accounts[0];
 
     describe('verify proof', function () {
 
         beforeEach(async function () {
-            this.verifierContract = await Verifier.new({from: accounts[0]});
-            this.solnSquareVerifierContract = await SolnSquareVerifier.new(verifierContract.address,{from: accounts[0]});
+            let verifierContract = await Verifier.new({from: account_one});
+            this.contract = await SolnSquareVerifier.new(verifierContract.address, {from: account_one});
         })
 
         it('Test if a new solution can be added for contract', async function () {
             var eventEmitted = false
-            await this.solnSquareVerifierContract.SolutionAdded(accounts[1],1,(err, res) => {
+            await this.contract.SolutionAdded((err,resp) => {
                 eventEmitted = true
             });
-            await this.solnSquareVerifierContract.addSolution(accounts[1],1,{from: accounts[0]});
-
+            await this.contract.mintToken(accounts[0],2,correctProof.proof.a,correctProof.proof.b,correctProof.proof.c,correctProof.inputs,{from: accounts[0]});
             assert.equal(eventEmitted,true,"Event SolutionAdded didnt emit");
         })
 
         it('Test if an ERC721 token can be minted for contract', async function () {
-            let v = await this.solnSquareVerifierContract
-                .mint(account[0],1,correctProof.proof.a,correctProof.proof.b,correctProof.proof.c,correctProof.inputs,{from: accounts[0]});
-
-            assert.equal(v,true,"Token didnt mint");
+            let v = await this.contract.mintToken(accounts[0],1,correctProof.proof.a,correctProof.proof.b,correctProof.proof.c,correctProof.inputs,{from: accounts[0]});
+            assert.equal(v.logs[1].type, 'mined',"Token didnt mint");
         })
 
-        it('Test with the same proof cant mint twice', async function () {
-            let firstMint = await this.solnSquareVerifierContract
-                .mint(account[0],1,correctProof.proof.a,correctProof.proof.b,correctProof.proof.c,correctProof.inputs,{from: accounts[0]});
-            let secondMint = true
-            try {
-                 secondMint = await this.solnSquareVerifierContract
-                    .mint(account[0], 1, correctProof.proof.a, correctProof.proof.b, correctProof.proof.c, correctProof.inputs, {from: accounts[0]});
-            }catch(e){
-                secondMint=false
-            }
-            assert.equal(firstMint,true,"Token didnt mint");
-            assert.equal(secondMint,false,"Token mint with same solution");
-        })
     })
 })

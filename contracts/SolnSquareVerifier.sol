@@ -15,7 +15,7 @@ contract SolnSquareVerifier is PropertyTitleERC721Token {
 
     event SolutionAdded(address sAdddress, uint tokenId);
 
-    Verifier public verifier;
+    Verifier private verifier;
 
     constructor(address verifierAddress) public {
         verifier = Verifier(verifierAddress);
@@ -29,7 +29,7 @@ contract SolnSquareVerifier is PropertyTitleERC721Token {
         emit SolutionAdded(_address, _tokenId);
     }
 
-    function mint(address to, uint256 tokenId, uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input) public returns (bool){
+    function mintToken(address to, uint256 tokenId, uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input) public returns (bool){
         require(verifier.verifyTx(a, b, c, input), "Solutions is not verified");
         bytes32 hash = keccak256(abi.encodePacked(a, b, c, input));
         require(!solutionExist[hash], "solution already exist");
