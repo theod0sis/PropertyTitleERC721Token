@@ -70,6 +70,7 @@ Then change the proofs inside mint.js with the new one and all the parameters wi
 ## Run test cases:
 
 To run the unit test run the following command:
+
 `truffle test`
 
 ## Project Resources
