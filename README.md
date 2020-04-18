@@ -9,8 +9,8 @@ The tokens where placed on a blockchain market place (OpenSea) for others to pur
 ## Smart contract and token infos:
 The smart contract is deployed on Rinkeby Ethereum test network:
 
-    1) [SolnSquareVerifier](https://rinkeby.etherscan.io/address/0xa8c6e5c1054f04c7c44094fca08deb4ca7f53701)
-    2) [Verifier](https://rinkeby.etherscan.io/address/0x2f2B19ec401E071E3373788FE0827f55264Cc4db)
+   [SolnSquareVerifier](https://rinkeby.etherscan.io/address/0xa8c6e5c1054f04c7c44094fca08deb4ca7f53701)
+   [Verifier](https://rinkeby.etherscan.io/address/0x2f2B19ec401E071E3373788FE0827f55264Cc4db)
     
 Transactions of minting new tokens using ZoKrates for proof:
 
